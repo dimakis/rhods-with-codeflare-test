@@ -1,0 +1,34 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mcad-rhods-cr
+rules:
+- apiGroups: 
+  - "mcads.codeflare.codeflare.dev" 
+  - "codeflare.codeflare.dev"
+  resources: 
+   - mcad
+   - mcads
+  verbs: 
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: mcad-rhods-crb
+  namespace: 'redhat-ods-operator'
+subjects:
+- kind: ServiceAccount
+  name: rhods-operator
+  namespace: 'redhat-ods-operator'
+roleRef:
+  kind: ClusterRole
+  name: mcad-rhods-cr
+  apiGroup: rbac.authorization.k8s.io
